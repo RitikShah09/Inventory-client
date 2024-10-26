@@ -70,12 +70,12 @@ function ImportData() {
         <DeleteDialog open={open} id={selectedId} setOpen={setOpen} />
       )}
 
-      <div className="w-5/6 px-10">
+      <div className="w-5/6 sm:px-0 md:px-2 lg:px-10">
         {loading ? (
           <ImportSkeletonLoader />
         ) : (
           <>
-            <div className="border-t-2 h-[13%]">
+            <div className="border-t-2 h-[13%] sm:px-4 px-4 md:px-0 lg:px-0">
               <p className="mt-4 text-gray-500">
                 Dashboard
                 <i className="ri-arrow-right-s-line"></i>
@@ -108,7 +108,7 @@ function ImportData() {
                     ></i>
                   </div>
                 </div>
-                <table className="w-full text-sm text-left rtl:text-right border-t">
+                <table className="w-full text-sm text-left md:text-xs rtl:text-right border-t">
                   <thead className="text-xs uppercase">
                     <tr>
                       <th scope="col" className="p-4">

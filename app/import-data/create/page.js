@@ -1,9 +1,7 @@
-import NewEntry from '@/components/NewEntry'
+import NewEntry from "@/components/NewEntry";
 
 function Page() {
-  return (
-    <NewEntry/>
-  )
+  return <NewEntry />;
 }
 
-export default Page
+export default Page;

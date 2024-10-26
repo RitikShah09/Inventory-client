@@ -51,18 +51,20 @@ function ImportDataDetails() {
     <>
       {open && <DeleteDialog open={open} id={data._id} setOpen={setOpen} />}
 
-      <div className="w-5/6 px-10">
+      <div className="w-5/6 md:px-2 lg:px-10">
         {loader ? (
           <SkeletonLoader />
         ) : (
           <>
-            <div className="border-t-2 h-[10%]">
+            <div className="border-t-2 h-[10%] px-4 sm:px-4 lg:px-0 md:px-0">
               <p className="mt-4 text-gray-500">
                 Dashboard
                 <i className="ri-arrow-right-s-line"></i>
-                Import Data
+                <Link href={"/import-data"} className=" hover:text-black">
+                  Import Data
+                </Link>
                 <i className="ri-arrow-right-s-line"></i>
-                Details
+                <span className=" text-black font-bold">Details</span>
               </p>
               <div className="flex justify-between mt-2 items-center">
                 <h1 className="font-bold">Import Entry Details</h1>

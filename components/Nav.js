@@ -14,7 +14,7 @@ function Nav() {
   };
 
   return (
-    <nav className="h-full w-1/6 bg-green-950 text-white flex flex-col justify-between items-start px-4 pt-4">
+    <nav className="h-full w-1/6 bg-green-950 text-white flex flex-col justify-between items-start text-xs sm:text-sm lg:text-lg px-4 pt-4">
       <div className="flex flex-col gap-3">
         <Link href={""} className="text-gray-500 flex items-center gap-1">
           <i className="ri-dashboard-line"></i>

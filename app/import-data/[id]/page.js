@@ -1,9 +1,7 @@
-import ImportDataDetails from '@/components/ImportDataDetails'
+import ImportDataDetails from "@/components/ImportDataDetails";
 
 function Page() {
-  return (
-    <ImportDataDetails/>
-  )
+  return <ImportDataDetails />;
 }
 
-export default Page
+export default Page;

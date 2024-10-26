@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { asyncAddItem } from "@/store/actions/inventory";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const NewEntry = () => {
   const containerRef = useRef(null);
@@ -112,14 +113,14 @@ const NewEntry = () => {
       <p className="mt-4 text-gray-500">
         Dashboard
         <i className="ri-arrow-right-s-line"></i>
-        Import Data
+        <Link href={'/import-data'} className=" hover:text-black">Import Data</Link>
         <i className="ri-arrow-right-s-line"></i>
-        Add Entry
+        <span className=" text-black font-bold">Add Entry</span>
       </p>
       <h1 className="mt-3 font-bold">Add Entry</h1>
 
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
-        <div className="grid grid-cols-3 mt-3 gap-x-20 gap-y-4">
+        <div className="grid grid-cols-3 mt-3 md:gap-x-7 sm:gap-x-3 lg:gap-x-20 gap-x-1 gap-y-4">
           <InputField
             label="Invoice Number"
             placeholder="Enter Invoice Number"
@@ -199,7 +200,7 @@ const NewEntry = () => {
         </div>
         <hr className="mt-7" />
         <h1 className="mt-5 font-bold">Import Charges</h1>
-        <div className="grid grid-cols-3 mt-3 gap-x-20 gap-y-4">
+        <div className="grid grid-cols-3 mt-3 md:gap-x-7 sm:gap-x-3 lg:gap-x-20 gap-x-1 gap-y-4">
           <InputField
             label="Transport Mode"
             register={register}
@@ -312,43 +313,41 @@ const NewEntry = () => {
         <h1 className="mt-5 font-bold">Item Details</h1>
 
         {fields.map((field, index) => (
-          <div
-            key={field.id}
-            className="grid grid-cols-3 mt-3 gap-x-20 gap-y-4"
-          >
-            <InputField
-              label="Product Code"
-              register={register}
-              name={`items[${index}].product_code`}
-              type="select"
-              options={[
-                { value: "PC001", label: "PC001 - Product A" },
-                { value: "PC002", label: "PC002 - Product B" },
-                { value: "PC003", label: "PC003 - Product C" },
-              ]}
-              validation={{ required: "Product code is required" }}
-              errors={errors?.items?.[index]?.product_code}
-              touched={touchedFields?.items?.[index]?.product_code}
-            />
-            <InputField
-              label="Rate"
-              placeholder="Enter Rate (per unit)"
-              register={register}
-              name={`items[${index}].rate`}
-              type="number"
-              validation={{
-                required: "Rate is required",
-                min: { value: 0, message: "Rate must be non-negative" },
-                valueAsNumber: true,
-              }}
-              errors={errors?.items?.[index]?.rate}
-              touched={touchedFields?.items?.[index]?.rate}
-            />
-            <div
-              className={`flex gap-2 items-end ${
-                fields.length === 1 ? "justify-between" : ""
-              }`}
-            >
+          <div key={field.id} className="flex justify-between mt-3">
+            <div className="w-1/4">
+              <InputField
+                label="Product Code"
+                register={register}
+                name={`items[${index}].product_code`}
+                type="select"
+                options={[
+                  { value: "PC001", label: "PC001 - Product A" },
+                  { value: "PC002", label: "PC002 - Product B" },
+                  { value: "PC003", label: "PC003 - Product C" },
+                ]}
+                validation={{ required: "Product code is required" }}
+                errors={errors?.items?.[index]?.product_code}
+                touched={touchedFields?.items?.[index]?.product_code}
+              />
+            </div>
+
+            <div className="w-1/4">
+              <InputField
+                label="Rate"
+                placeholder="Enter Rate (per unit)"
+                register={register}
+                name={`items[${index}].rate`}
+                type="number"
+                validation={{
+                  required: "Rate is required",
+                  min: { value: 0, message: "Rate must be non-negative" },
+                  valueAsNumber: true,
+                }}
+                errors={errors?.items?.[index]?.rate}
+                touched={touchedFields?.items?.[index]?.rate}
+              />
+            </div>
+            <div className="w-1/4">
               <InputField
                 label="Quantity"
                 placeholder="Enter Quantity"
@@ -363,14 +362,19 @@ const NewEntry = () => {
                 errors={errors?.items?.[index]?.quantity}
                 touched={touchedFields?.items?.[index]?.quantity}
               />
+            </div>
 
+            <div className={`flex w-[10%] justify-end items-end`}>
               <div className=" text-white">
                 {fields.length === 1 ? (
-                  <div
-                    className="h-10 w-10 rounded-full bg-blue-700 cursor-pointer flex items-center justify-center"
-                    onClick={addComponent}
-                  >
-                    <i className="ri-add-fill"></i>
+                  <div className=" flex gap-2">
+                    <div className="h-10 w-10 rounded-full"></div>
+                    <div
+                      className="h-10 w-10 rounded-full bg-blue-700 cursor-pointer flex items-center justify-center"
+                      onClick={addComponent}
+                    >
+                      <i className="ri-add-fill"></i>
+                    </div>
                   </div>
                 ) : index === fields.length - 1 ? (
                   <div className="flex gap-2">
@@ -388,11 +392,14 @@ const NewEntry = () => {
                     </div>
                   </div>
                 ) : (
-                  <div
-                    className="h-10 w-10 bg-red-700 rounded-full cursor-pointer flex items-center justify-center"
-                    onClick={() => remove(index)}
-                  >
-                    <i className="ri-close-fill"></i>
+                  <div className=" flex gap-2">
+                    <div
+                      className="h-10 w-10 bg-red-700 rounded-full cursor-pointer flex items-center justify-center"
+                      onClick={() => remove(index)}
+                    >
+                      <i className="ri-close-fill"></i>
+                    </div>
+                    <div className="h-10 w-10 rounded-full"></div>
                   </div>
                 )}
               </div>
