@@ -7,9 +7,9 @@ import { asyncUpdateItem } from "@/store/actions/inventory";
 import { useRouter } from "next/navigation";
 
 const EditInvoice = ({ existingData }) => {
-  const router = useRouter(); // ✅ Call hooks at the top level
-  const containerRef = useRef(null); // ✅
-  const dispatch = useDispatch(); // ✅
+  const router = useRouter();
+  const containerRef = useRef(null); 
+  const dispatch = useDispatch(); 
 
   const formatDate = (dateString) => {
     if (!dateString) return "";

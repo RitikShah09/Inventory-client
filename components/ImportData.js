@@ -169,7 +169,9 @@ function ImportData() {
                         </p>
                       </Link>
                     </td>
-                    <td className="py-4">{item.import_partner}</td>
+                    <td className="py-4">
+                      {item.import_partner ? item.import_partner : "N/A"}
+                    </td>
                     <td className="py-4">{item.boe_number}</td>
                     <td className="py-4">{item.total_bill}</td>
                     <td className="py-4">
