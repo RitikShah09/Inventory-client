@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { addUser, removeUser } from "../slices/authSlice";
 import getToken from "@/utils/getToken";
 
-const URL = "http://localhost:8080";
+const URL = "https://inventory-server-26op.onrender.com";
 
 export const asyncSignUpUser = (user) => async (dispatch, getstate) => {
   try {
