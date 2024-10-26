@@ -24,6 +24,12 @@ const AuthForm = ({ type }) => {
     }
   };
 
+  const handleGuest = async () => {
+    await dispatch(
+      asyncSignInUser({ email: "ritiksbs@gmail.com", password: "Ritik" })
+    );
+  };
+
   return (
     <div className="h-full w-full flex items-center justify-center flex-col">
       <h1 className="text-3xl font-bold text-green-950 mb-10">
@@ -94,6 +100,13 @@ const AuthForm = ({ type }) => {
         >
           {type === "signup" ? "Sign Up" : "Sign In"}
         </button>
+
+        <div
+          className="px-3 py-2 text-center cursor-pointer rounded-lg bg-yellow-950 text-white"
+          onClick={handleGuest}
+        >
+          Login With Guest Credentials
+        </div>
 
         <p className="text-center">
           {type === "signup" ? (
