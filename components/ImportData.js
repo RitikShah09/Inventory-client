@@ -121,11 +121,11 @@ function ImportData() {
                     onClick={toggleTotalBillOrder}
                   >
                     Total Bill
-                    <span>
+                    <span className=" cursor-pointer">
                       {totalBillOrder === "asc" ? (
-                        <i className="ri-arrow-up-s-fill"></i>
+                        <i className="ri-arrow-up-s-line text-lg"></i>
                       ) : (
-                        <i className="ri-arrow-down-s-fill"></i>
+                        <i className="ri-arrow-down-s-line text-lg"></i>
                       )}
                     </span>
                   </th>
@@ -135,11 +135,11 @@ function ImportData() {
                     onClick={toggleEntryDateOrder}
                   >
                     Entered Date
-                    <span>
+                    <span className=" cursor-pointer">
                       {entryDateOrder === "asc" ? (
-                        <i className="ri-arrow-up-s-fill"></i>
+                       <i className="ri-arrow-up-s-line text-lg"></i>
                       ) : (
-                        <i className="ri-arrow-down-s-fill"></i>
+                        <i className="ri-arrow-down-s-line text-lg"></i>
                       )}
                     </span>
                   </th>
