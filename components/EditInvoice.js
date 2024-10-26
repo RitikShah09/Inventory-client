@@ -7,10 +7,11 @@ import { asyncUpdateItem } from "@/store/actions/inventory";
 import { useRouter } from "next/navigation";
 
 const EditInvoice = ({ existingData }) => {
+  const router = useRouter();
+
   if (!existingData) {
     return <div>Loading...</div>;
   }
-  const router = useRouter();
 
   const containerRef = useRef(null);
   const dispatch = useDispatch();
