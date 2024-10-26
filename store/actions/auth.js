@@ -3,11 +3,9 @@ import { toast } from "react-toastify";
 import { addUser, removeUser } from "../slices/authSlice";
 import getToken from "@/utils/getToken";
 
-const URL = "https://inventory-server-26op.onrender.com";
-
 export const asyncSignUpUser = (user) => async (dispatch, getstate) => {
   try {
-    const { data } = await axios.post(`${URL}/auth/signup`, user);
+    const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/signup`, user);
     dispatch(addUser(data.user));
     document.cookie = `token=${data.token}; path=/; max-age=3600`;
     toast.success("User Registered Successfully");
@@ -18,7 +16,7 @@ export const asyncSignUpUser = (user) => async (dispatch, getstate) => {
 
 export const asyncSignInUser = (user) => async (dispatch, getstate) => {
   try {
-    const { data } = await axios.post(`${URL}/auth/login`, user);
+    const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, user);
     dispatch(addUser(data.user));
     document.cookie = `token=${data.token}; path=/; max-age=3600`;
     toast.success("User Logged In Successfully");
@@ -29,7 +27,7 @@ export const asyncSignInUser = (user) => async (dispatch, getstate) => {
 
 export const asyncCurrentUser = () => async (dispatch, getstate) => {
   try {
-    const { data } = await axios.get(`${URL}/auth/user`, {
+    const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/auth/user`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${getToken()}`,
