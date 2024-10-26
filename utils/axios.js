@@ -1,8 +1,9 @@
 import axios from "axios";
 import getToken from "./getToken";
+import URL from "./config";
 
 const instance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  baseURL: URL,
   withCredentials: true,
 });
 instance.interceptors.request.use(
