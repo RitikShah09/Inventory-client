@@ -1,9 +1,9 @@
 import NewEntry from '@/components/NewEntry'
 
-function page() {
+function Page() {
   return (
     <NewEntry/>
   )
 }
 
-export default page
+export default Page

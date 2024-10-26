@@ -1,9 +1,9 @@
 import ImportDataDetails from '@/components/ImportDataDetails'
 
-function page() {
+function Page() {
   return (
     <ImportDataDetails/>
   )
 }
 
-export default page
+export default Page

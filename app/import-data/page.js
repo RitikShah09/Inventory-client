@@ -1,9 +1,9 @@
 import ImportData from "@/components/ImportData"
 
-const page = () => {
+const Page = () => {
   return (
     <ImportData/>
   )
 }
 
-export default page
+export default Page

@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import getToken from "@/utils/getToken";
 import { asyncCurrentUser } from "@/store/actions/auth";
 import { useRouter } from "next/navigation";
-function page() {
+function Page() {
   const dispatch = useDispatch();
   const router = useRouter();
   const { user } = useSelector((state) => state.user);
@@ -26,4 +26,4 @@ function page() {
   return <AuthForm type="signup" />;
 }
 
-export default page;
+export default Page;
