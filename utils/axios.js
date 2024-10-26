@@ -2,7 +2,7 @@ import axios from "axios";
 import getToken from "./getToken";
 
 const instance = axios.create({
-  baseURL: "http://localhost:8080/",
+  baseURL: "https://inventory-server-26op.onrender.com/",
   withCredentials: true,
 });
 instance.interceptors.request.use(
