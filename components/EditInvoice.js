@@ -7,14 +7,9 @@ import { asyncUpdateItem } from "@/store/actions/inventory";
 import { useRouter } from "next/navigation";
 
 const EditInvoice = ({ existingData }) => {
-  const router = useRouter();
-
-  if (!existingData) {
-    return <div>Loading...</div>;
-  }
-
-  const containerRef = useRef(null);
-  const dispatch = useDispatch();
+  const router = useRouter(); // ✅ Call hooks at the top level
+  const containerRef = useRef(null); // ✅
+  const dispatch = useDispatch(); // ✅
 
   const formatDate = (dateString) => {
     if (!dateString) return "";
@@ -43,8 +38,8 @@ const EditInvoice = ({ existingData }) => {
               quantity: item.quantity || "",
             }))
           : [{ product_code: "", rate: "", quantity: "" }],
-      import_invoice_date: formatDate(existingData.import_invoice_date),
-      entry_date: formatDate(existingData.entry_date),
+      import_invoice_date: formatDate(existingData?.import_invoice_date),
+      entry_date: formatDate(existingData?.entry_date),
     },
   });
 
@@ -100,6 +95,10 @@ const EditInvoice = ({ existingData }) => {
   const handleCancel = () => {
     router.back();
   };
+
+  if (!existingData) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div
