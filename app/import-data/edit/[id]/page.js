@@ -1,5 +1,6 @@
 'use client'
 import EditInvoice from "@/components/EditInvoice";
+import EditInvoiceSkeleton from "@/components/EditInvoiceLoader";
 import axios from "@/utils/axios";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -25,7 +26,7 @@ const Page = () => {
     getData();
   }, []);
 
-  if (loading) return <div>Loading...</div>; // Loading state UI
+  if (loading) return <EditInvoiceSkeleton/>
 
   return <EditInvoice existingData={data} />;
 };

@@ -38,7 +38,7 @@ const AuthForm = ({ type }) => {
       <form
         onSubmit={handleSubmit(onSubmit)}
         noValidate
-        className="flex flex-col gap-4 w-1/5"
+        className="flex flex-col gap-4 md:w-1/3 lg:w-1/5"
       >
         <div className="flex flex-col">
           <label htmlFor="email">Email</label>
