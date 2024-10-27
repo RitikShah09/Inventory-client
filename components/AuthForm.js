@@ -29,9 +29,11 @@ const AuthForm = ({ type }) => {
   };
 
   const handleGuest = async () => {
+    setLoader(true);
     await dispatch(
       asyncSignInUser({ email: "ritiksbs@gmail.com", password: "Ritik" })
     );
+    setLoader(false);
   };
 
   return (
@@ -121,7 +123,7 @@ const AuthForm = ({ type }) => {
                 fill="currentColor"
               />
             </svg>
-            Loading... 
+            Loading...
           </button>
         ) : (
           <button
