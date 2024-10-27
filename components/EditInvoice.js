@@ -28,6 +28,7 @@ const EditInvoice = ({ existingData }) => {
     control,
     setError,
     watch,
+    setValue,
     formState: { errors, touchedFields },
   } = useForm({
     defaultValues: {
@@ -51,7 +52,25 @@ const EditInvoice = ({ existingData }) => {
   });
 
   const miscCharge = watch("misc_charge");
+  const feesAndCharges = watch([
+    "exchange_rate",
+    "custom_duty",
+    "ocean_charge",
+    "cn_h_charge",
+    "misc_charge",
+  ]);
+  useEffect(() => {
+    const [exchangeRate, customDuty, oceanCharge, cnHCharge, miscCharge] =
+      feesAndCharges;
 
+    const total =
+      (Number(exchangeRate) || 1) *
+      [customDuty, oceanCharge, cnHCharge, miscCharge]
+        .map(Number)
+        .reduce((acc, val) => acc + (val || 0), 0);
+
+    setValue("total_bill", total);
+  }, [feesAndCharges, setValue]);
   const addComponent = () => {
     append({ product_code: "", rate: "", quantity: "" });
   };

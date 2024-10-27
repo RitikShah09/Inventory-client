@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DeleteDialog from "./DeleteDialog";
 import ImportSkeletonLoader from "./ImportDataSkelton";
-import axios from "@/utils/axios";
 
 function ImportData() {
   const dispatch = useDispatch();
@@ -23,6 +22,7 @@ function ImportData() {
   const handleCheckboxChange = (id) => {
     setSelectedId((prevSelectedId) => (prevSelectedId === id ? null : id));
   };
+  
 
   useEffect(() => {
     const loadItems = async () => {

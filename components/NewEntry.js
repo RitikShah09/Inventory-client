@@ -38,10 +38,17 @@ const NewEntry = () => {
     control,
     setError,
     watch,
+    setValue,
     formState: { errors, touchedFields },
   } = useForm({
     defaultValues: {
       items: [{ product_code: "", rate: "", quantity: "" }],
+      exchange_rate: 0,
+      custom_duty: 0,
+      ocean_charge: 0,
+      cn_h_charge: 0,
+      misc_charge: 0,
+      total_bill: 0,
     },
   });
 
@@ -51,6 +58,27 @@ const NewEntry = () => {
   });
 
   const miscCharge = watch("misc_charge");
+
+  const feesAndCharges = watch([
+    "exchange_rate",
+    "custom_duty",
+    "ocean_charge",
+    "cn_h_charge",
+    "misc_charge",
+  ]);
+
+  useEffect(() => {
+    const [exchangeRate, customDuty, oceanCharge, cnHCharge, miscCharge] =
+      feesAndCharges;
+
+    const total =
+      (Number(exchangeRate) || 1) *
+      [customDuty, oceanCharge, cnHCharge, miscCharge]
+        .map(Number)
+        .reduce((acc, val) => acc + (val || 0), 0);
+
+    setValue("total_bill", total);
+  }, [feesAndCharges, setValue]);
 
   const addComponent = () => {
     append({ productCode: "", rate: "", quantity: "" });
@@ -113,7 +141,9 @@ const NewEntry = () => {
       <p className="mt-4 text-gray-500">
         Dashboard
         <i className="ri-arrow-right-s-line"></i>
-        <Link href={'/import-data'} className=" hover:text-black">Import Data</Link>
+        <Link href={"/import-data"} className=" hover:text-black">
+          Import Data
+        </Link>
         <i className="ri-arrow-right-s-line"></i>
         <span className=" text-black font-bold">Add Entry</span>
       </p>
