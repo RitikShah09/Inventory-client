@@ -74,32 +74,32 @@ function ImportDataDetails() {
             <div className="max-h-[25%] mb-5 border rounded-lg">
               <div className="px-5 grid grid-cols-2 py-3 gap-2">
                 <h1>
-                  <span className="text-sm">Import Invoice Number:</span>
+                  <span className="text-sm">Import Invoice Number: </span>
                   {data.importInvoiceNumber}
                 </h1>
                 <h1>
-                  <span className="text-sm">Import Invoice Date:</span>
+                  <span className="text-sm">Import Invoice Date: </span>
                   {data.importInvoiceDate}
                 </h1>
                 <h1>
                   <span className="text-sm">Importer Name:</span>{" "}
-                  {data.importPartner}
+                  {data.importPartner ? data.importPartner : "N/A"}
                 </h1>
                 <h1>
                   <span className="text-sm">Entered Date:</span>{" "}
                   {data.entryDate}
                 </h1>
-                <h1>
+                <div className="text-sm">
                   <span className="text-sm">BOE Number:</span> {data.boeNumber}
-                </h1>
-                <h1>
+                </div>
+                <h1 className="text-sm">
                   Status:
                   <span
                     className={`${
-                      data.isDraft ? "bg-red-500" : "bg-green-400"
-                    } py-1 rounded-xl px-3 text-sm ml-1`}
+                      data.isDraft ? "bg-red-400" : "bg-green-400"
+                    } py-1 rounded-lg px-2 text-sm ml-1`}
                   >
-                    {data.isDraft ? "Intransit" : "Received"}
+                    {data.isDraft ? "In Transit" : "Received"}
                   </span>
                 </h1>
               </div>
@@ -107,7 +107,7 @@ function ImportDataDetails() {
 
             <div className="max-h-[65%] w-full">
               <div className="w-full border rounded-lg">
-                <div className="flex justify-end gap-3 pr-10 text-xl py-1">
+                <div className="flex justify-end gap-3 border-b pr-10 text-xl py-1">
                   <Link href={`/import-data/edit/${data._id}`}>
                     <i className="ri-pencil-line"></i>
                   </Link>
@@ -121,81 +121,87 @@ function ImportDataDetails() {
                   </div>
                 </div>
 
-                <table className="w-full text-sm text-left border-t">
-                  <thead className="text-xs uppercase">
-                    <tr>
-                      {/* <th className="p-4">
+                {items.length === 0 ? (
+                  <div className=" text-center text-red-600 font-bold py-2">No Items Found!</div>
+                ) : (
+                  <table className="w-full text-sm text-left">
+                    <thead className="text-xs uppercase">
+                      <tr>
+                        {/* <th className="p-4">
         <input type="checkbox" className="w-4 h-4" />
       </th> */}
-                      <th className="text-[10px] py-4 p-4">Item Code</th>
-                      <th className="text-[10px] py-4">Rate $</th>
-                      <th className="text-[10px] py-4">Exchange Rate</th>
-                      <th className="text-[10px] py-4">Quantity</th>
-                      <th className="text-[10px] py-4">Rate</th>
-                      <th className="text-[10px] py-4">Total Item Rate</th>
-                      <th className="text-[10px] py-4">Custom Duty</th>
-                      <th className="text-[10px] py-4">Ocean Charges</th>
-                      <th className="text-[10px] py-4">C&H Charges</th>
-                      <th className="text-[10px] py-4">Total</th>
-                      <th className="text-[10px] py-4">Rate per Quantity</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {currentItems.map((item, i) => (
-                      <tr key={i} className="border-t">
-                        {/* <td className="p-4">
+                        <th className="text-[10px] py-4 p-4">Item Code</th>
+                        <th className="text-[10px] py-4">Rate $</th>
+                        <th className="text-[10px] py-4">Exchange Rate</th>
+                        <th className="text-[10px] py-4">Quantity</th>
+                        <th className="text-[10px] py-4">Rate</th>
+                        <th className="text-[10px] py-4">Total Item Rate</th>
+                        <th className="text-[10px] py-4">Custom Duty</th>
+                        <th className="text-[10px] py-4">Ocean Charges</th>
+                        <th className="text-[10px] py-4">C&H Charges</th>
+                        <th className="text-[10px] py-4">Total</th>
+                        <th className="text-[10px] py-4">Rate per Quantity</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {currentItems.map((item, i) => (
+                        <tr key={i} className="border-t">
+                          {/* <td className="p-4">
           <input type="checkbox" className="w-4 h-4" />
         </td> */}
-                        <td className="p-4">{item.itemCode}</td>
-                        <td>{item.rateInUSD}</td>
-                        <td>{item.exchangeRate}</td>
-                        <td>{item.quantity}</td>
-                        <td>{item.rateAfterExchange}</td>
-                        <td>{item.totalItemRate}</td>
-                        <td>{item.customDuty}</td>
-                        <td>{item.oceanCharge}</td>
-                        <td>{item.cnhCharge}</td>
-                        <td>{item.total}</td>
-                        <td>{item.ratePerQuantity}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                          <td className="p-4">{item.itemCode}</td>
+                          <td>{item.rateInUSD}</td>
+                          <td>{item.exchangeRate}</td>
+                          <td>{item.quantity}</td>
+                          <td>{item.rateAfterExchange}</td>
+                          <td>{item.totalItemRate}</td>
+                          <td>{item.customDuty}</td>
+                          <td>{item.oceanCharge}</td>
+                          <td>{item.cnhCharge}</td>
+                          <td>{item.total}</td>
+                          <td>{item.ratePerQuantity}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
 
-                <div className="flex justify-end items-center gap-3 border-t text-sm py-2 pr-10">
-                  <div className=" text-xs text-gray-500 flex items-center gap-1">
-                    Items per page:{" "}
-                    <span className="font-bold text-sm text-gray-700">
-                      {limit}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <span className=" text-gray-700 font-bold text-sm">
-                      {page}
-                    </span>
-                    <span className=" text-sm text-gray-500">
-                      {" "}
-                      of {totalPages}
-                    </span>
-                  </div>
+                {items.length === 0 ? null : (
+                  <div className="flex justify-end items-center gap-3 border-t text-sm py-2 pr-10">
+                    <div className=" text-xs text-gray-500 flex items-center gap-1">
+                      Items per page:{" "}
+                      <span className="font-bold text-sm text-gray-700">
+                        {limit}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <span className=" text-gray-700 font-bold text-sm">
+                        {page}
+                      </span>
+                      <span className=" text-sm text-gray-500">
+                        {" "}
+                        of {totalPages}
+                      </span>
+                    </div>
 
-                  <div className=" flex items-center">
-                    <button
-                      onClick={handlePreviousPage}
-                      disabled={page === 1}
-                      className="px-2"
-                    >
-                      <i className="ri-arrow-left-s-line cursor-pointer text-lg text-gray-500"></i>
-                    </button>
-                    <button
-                      onClick={handleNextPage}
-                      disabled={page === totalPages}
-                      className="px-2"
-                    >
-                      <i className="ri-arrow-right-s-line cursor-pointer text-lg text-gray-500"></i>
-                    </button>
+                    <div className=" flex items-center">
+                      <button
+                        onClick={handlePreviousPage}
+                        disabled={page === 1}
+                        className="px-2"
+                      >
+                        <i className="ri-arrow-left-s-line cursor-pointer text-lg text-gray-500"></i>
+                      </button>
+                      <button
+                        onClick={handleNextPage}
+                        disabled={page === totalPages}
+                        className="px-2"
+                      >
+                        <i className="ri-arrow-right-s-line cursor-pointer text-lg text-gray-500"></i>
+                      </button>
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             </div>
           </>

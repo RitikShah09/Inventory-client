@@ -43,7 +43,7 @@ function Nav() {
         className="mb-4 cursor-pointer text-white flex items-center gap-1"
         onClick={handleSignOut}
       >
-       <i className="ri-logout-box-line text-xs"></i>
+       <i className="ri-logout-box-line"></i>
         <span>Signout</span>
       </button>
     </nav>

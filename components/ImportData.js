@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DeleteDialog from "./DeleteDialog";
 import ImportSkeletonLoader from "./ImportDataSkelton";
+import axios from "@/utils/axios";
+
 function ImportData() {
   const dispatch = useDispatch();
   const { items, totalPages } = useSelector((state) => state.inventory);
@@ -79,7 +81,7 @@ function ImportData() {
               <p className="mt-4 text-gray-500">
                 Dashboard
                 <i className="ri-arrow-right-s-line"></i>
-                Import Data
+                <span className=" text-black font-bold">Import Data</span>
               </p>
               <div className="flex justify-between mt-1 items-center">
                 <h1 className="font-bold">Import Data</h1>
@@ -92,7 +94,7 @@ function ImportData() {
             </div>
             <div className="max-h-[87%] w-full">
               <div className="w-full border rounded-lg">
-                <div className="flex justify-end py-1 items-center gap-3 pr-10 text-xl">
+                <div className="flex justify-end py-1 items-center gap-3 pr-10 text-xl border-b">
                   <Link href={selectedId ? `import-data/${selectedId}` : ""}>
                     <i className="ri-eye-line"></i>
                   </Link>
@@ -108,135 +110,147 @@ function ImportData() {
                     ></i>
                   </div>
                 </div>
-                <table className="w-full text-sm text-left md:text-xs rtl:text-right border-t">
-                  <thead className="text-xs uppercase">
-                    <tr>
-                      <th scope="col" className="p-4">
-                        <div className="flex items-center">
-                          <input
-                            id="checkbox-all-search"
-                            type="checkbox"
-                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
-                          />
-                          <label
-                            htmlFor="checkbox-all-search"
-                            className="sr-only"
-                          >
-                            checkbox
-                          </label>
-                        </div>
-                      </th>
-                      <th className="text-[10px] py-4">Import Invoice No.</th>
-                      <th className="text-[10px] py-4">Import Partner</th>
-                      <th className="text-[10px] py-4">BOE No.</th>
-                      <th
-                        className="text-[10px] py-4 flex items-center"
-                        onClick={toggleTotalBillOrder}
-                      >
-                        Total Bill
-                        <span className=" cursor-pointer">
-                          {totalBillOrder === "asc" ? (
-                            <i className="ri-arrow-up-s-line text-lg"></i>
-                          ) : (
-                            <i className="ri-arrow-down-s-line text-lg"></i>
-                          )}
-                        </span>
-                      </th>
-                      <th className="text-[10px] py-4">Date</th>
-                      <th
-                        className="text-[10px] py-4 flex items-center"
-                        onClick={toggleEntryDateOrder}
-                      >
-                        Entered Date
-                        <span className=" cursor-pointer">
-                          {entryDateOrder === "asc" ? (
-                            <i className="ri-arrow-up-s-line text-lg"></i>
-                          ) : (
-                            <i className="ri-arrow-down-s-line text-lg"></i>
-                          )}
-                        </span>
-                      </th>
-                      <th className="text-[10px] py-4">Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {items?.map((item) => (
-                      <tr key={item._id} className="border-t font-medium">
-                        <td className="w-4 p-4">
+
+                {items.length === 0 ? (
+                  <div className=" text-center text-red-600 font-bold py-2">
+                    Data Not Found!
+                  </div>
+                ) : (
+                  <table className="w-full text-sm text-left md:text-xs rtl:text-right">
+                    <thead className="text-xs uppercase">
+                      <tr>
+                        <th scope="col" className="p-4">
                           <div className="flex items-center">
                             <input
+                              id="checkbox-all-search"
                               type="checkbox"
-                              className="w-4 h-4 cursor-pointer text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
-                              checked={selectedId === item._id}
-                              onChange={() => handleCheckboxChange(item._id)}
+                              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
                             />
-                            <label className="sr-only">checkbox</label>
+                            <label
+                              htmlFor="checkbox-all-search"
+                              className="sr-only"
+                            >
+                              checkbox
+                            </label>
                           </div>
-                        </td>
-                        <td className="py-4">
-                          <Link href={`/import-data/${item._id}`}>
-                            <p>
-                              {item.import_invoice_number
-                                ? item.import_invoice_number
-                                : "Not provided"}
-                            </p>
-                          </Link>
-                        </td>
-                        <td className="py-4">
-                          {item.import_partner ? item.import_partner : "N/A"}
-                        </td>
-                        <td className="py-4">{item.boe_number}</td>
-                        <td className="py-4">{item.total_bill}</td>
-                        <td className="py-4">
-                          {formatDate(item.import_invoice_date)}
-                        </td>
-                        <td className="py-4">{formatDate(item.entry_date)}</td>
-                        <td className="py-4">
-                          <span
-                            className={`  ${
-                              item.isDraft ? "bg-red-500" : "bg-green-500"
-                            } py-1 rounded-xl px-3`}
-                          >
-                            {item.isDraft ? "Intransit" : "Received"}
+                        </th>
+                        <th className="text-[10px] py-4">Import Invoice No.</th>
+                        <th className="text-[10px] py-4">Import Partner</th>
+                        <th className="text-[10px] py-4">BOE No.</th>
+                        <th
+                          className="text-[10px] py-4 flex items-center"
+                          onClick={toggleTotalBillOrder}
+                        >
+                          Total Bill
+                          <span className=" cursor-pointer">
+                            {totalBillOrder === "asc" ? (
+                              <i className="ri-arrow-up-s-line text-lg"></i>
+                            ) : (
+                              <i className="ri-arrow-down-s-line text-lg"></i>
+                            )}
                           </span>
-                        </td>
+                        </th>
+                        <th className="text-[10px] py-4">Date</th>
+                        <th
+                          className="text-[10px] py-4 flex items-center"
+                          onClick={toggleEntryDateOrder}
+                        >
+                          Entered Date
+                          <span className=" cursor-pointer">
+                            {entryDateOrder === "asc" ? (
+                              <i className="ri-arrow-up-s-line text-lg"></i>
+                            ) : (
+                              <i className="ri-arrow-down-s-line text-lg"></i>
+                            )}
+                          </span>
+                        </th>
+                        <th className="text-[10px] py-4">Status</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-                <div className="flex justify-end items-center gap-3 border-t text-sm py-2 pr-10">
-                  <div className=" text-xs text-gray-500 flex items-center gap-1">
-                    Items per page:{" "}
-                    <span className="font-bold text-sm text-gray-700">
-                      {limit}
-                    </span>
+                    </thead>
+                    <tbody>
+                      {items?.map((item) => (
+                        <tr key={item._id} className="border-t font-medium">
+                          <td className="w-4 p-4">
+                            <div className="flex items-center">
+                              <input
+                                type="checkbox"
+                                className="w-4 h-4 cursor-pointer text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                                checked={selectedId === item._id}
+                                onChange={() => handleCheckboxChange(item._id)}
+                              />
+                              <label className="sr-only">checkbox</label>
+                            </div>
+                          </td>
+                          <td className="py-4">
+                            <Link href={`/import-data/${item._id}`}>
+                              <p>
+                                {item.import_invoice_number
+                                  ? item.import_invoice_number
+                                  : "Not provided"}
+                              </p>
+                            </Link>
+                          </td>
+                          <td className="py-4">
+                            {item.import_partner ? item.import_partner : "N/A"}
+                          </td>
+                          <td className="py-4">{item.boe_number}</td>
+                          <td className="py-4">{item.total_bill}</td>
+                          <td className="py-4">
+                            {formatDate(item.import_invoice_date)}
+                          </td>
+                          <td className="py-4">
+                            {formatDate(item.entry_date)}
+                          </td>
+                          <td className="py-4">
+                            <span
+                              className={`  ${
+                                item.isDraft ? "bg-red-400" : "bg-green-400"
+                              } py-1 rounded-lg px-2`}
+                            >
+                              {item.isDraft ? "In Transit" : "Received"}
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
+
+                {items.length === 0 ? null : (
+                  <div className="flex justify-end items-center gap-3 border-t text-sm py-2 pr-10">
+                    <div className=" text-xs text-gray-500 flex items-center gap-1">
+                      Items per page:{" "}
+                      <span className="font-bold text-sm text-gray-700">
+                        {limit}
+                      </span>
+                    </div>
+                    <div className=" flex items-center gap-1">
+                      <span className=" text-gray-700 font-bold text-sm">
+                        {page}
+                      </span>
+                      <span className=" text-sm text-gray-500">
+                        {" "}
+                        of {totalPages}
+                      </span>
+                    </div>
+                    <div className=" flex items-center">
+                      <button
+                        onClick={handlePrevPage}
+                        disabled={page === 1}
+                        className="cursor-pointer"
+                      >
+                        <i className="ri-arrow-left-s-line text-lg text-gray-500"></i>
+                      </button>
+                      <button
+                        onClick={handleNextPage}
+                        disabled={page === totalPages}
+                        className="cursor-pointer"
+                      >
+                        <i className="ri-arrow-right-s-line text-lg text-gray-500"></i>
+                      </button>
+                    </div>
                   </div>
-                  <div className=" flex items-center gap-1">
-                    <span className=" text-gray-700 font-bold text-sm">
-                      {page}
-                    </span>
-                    <span className=" text-sm text-gray-500">
-                      {" "}
-                      of {totalPages}
-                    </span>
-                  </div>
-                  <div className=" flex items-center">
-                    <button
-                      onClick={handlePrevPage}
-                      disabled={page === 1}
-                      className="cursor-pointer"
-                    >
-                      <i className="ri-arrow-left-s-line text-lg text-gray-500"></i>
-                    </button>
-                    <button
-                      onClick={handleNextPage}
-                      disabled={page === totalPages}
-                      className="cursor-pointer"
-                    >
-                      <i className="ri-arrow-right-s-line text-lg text-gray-500"></i>
-                    </button>
-                  </div>
-                </div>
+                )}
               </div>
             </div>
           </>
