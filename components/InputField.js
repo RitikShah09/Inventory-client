@@ -12,7 +12,7 @@ function InputField({
 }) {
   return (
     <div className="flex flex-col">
-      <label className=" text-sm">{label}</label>
+      <label className=" text-sm mb-1">{label}</label>
       {type === "select" ? (
         <div className="relative">
           <select

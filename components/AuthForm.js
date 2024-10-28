@@ -47,7 +47,7 @@ const AuthForm = ({ type }) => {
         className="flex flex-col gap-4 md:w-1/3 lg:w-1/5"
       >
         <div className="flex flex-col">
-          <label htmlFor="email">Email</label>
+          <label htmlFor="email" className=" mb-1">Email</label>
           <input
             id="email"
             className="px-3 py-2 border border-gray-300 rounded-lg"
@@ -67,7 +67,7 @@ const AuthForm = ({ type }) => {
         </div>
 
         <div className="flex flex-col relative">
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password" className="mb-1">Password</label>
           <div>
             <input
               id="password"
